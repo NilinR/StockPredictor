@@ -1,0 +1,55 @@
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Scanner;
+
+public class StockPrediction {
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        //Reading historical stock prices
+        List<Double> historicalPrices = new ArrayList<>();
+        System.out.println("Enter historical stock prices (enter 'done' to finish):");
+        while (true) {
+            String input = scanner.nextLine();
+            if (input.equalsIgnoreCase("done")) {
+                break;
+            }
+            try {
+                double price = Double.parseDouble(input);
+                historicalPrices.add(price);
+            } catch (NumberFormatException e) {
+                System.out.println("Invalid input. Please enter a valid number or 'done' to finish.");
+            }
+        }
+
+        //Getting the period for moving average
+        System.out.print("Enter the period for the moving average: ");
+        int period = scanner.nextInt();
+
+        //Computing the Simple Moving Average (SMA)
+        List<Double> movingAverages = computeSMA(historicalPrices, period);
+
+        //Predicting the next day's stock price based on the latest SMA
+        double predictedPrice = movingAverages.get(movingAverages.size() - 1);
+
+        //Displaying the results
+        System.out.printf("The predicted stock price for the next day is: %.2f%n", predictedPrice);
+
+        scanner.close();
+    }
+
+    //compute the Simple Moving Average
+    public static List<Double> computeSMA(List<Double> prices, int period) {
+        List<Double> movingAverages = new ArrayList<>();
+        for (int i = 0; i <= prices.size() - period; i++) {
+            double sum = 0.0;
+            for (int j = i; j < i + period; j++) {
+                sum += prices.get(j);
+            }
+            double average = sum / period;
+            movingAverages.add(average);
+        }
+        return movingAverages;
+    }
+}

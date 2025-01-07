@@ -1,0 +1,12 @@
+
+Compile the Program:
+javac StockPrediction.java
+
+Run the Program:
+java StockPrediction
+
+Entering Historical Prices and Period:
+   stock prices one by one (100, 102, 101).
+   'done' to finish entering prices.
+    the period for the moving average (3).
+
